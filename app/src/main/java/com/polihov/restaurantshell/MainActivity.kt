@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun openRestaurant(restaurant: Restaurant) {
         val intent = Intent(this, RestaurantWebViewActivity::class.java).apply {
+            putExtra(RestaurantWebViewActivity.EXTRA_ID, restaurant.id)
             putExtra(RestaurantWebViewActivity.EXTRA_NAME, restaurant.name)
             putExtra(RestaurantWebViewActivity.EXTRA_URL, restaurant.url)
         }
