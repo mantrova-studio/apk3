@@ -20,6 +20,15 @@ class RestaurantWebViewActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRestaurantWebviewBinding
 
+    companion object {
+        const val EXTRA_ID = "restaurant_id"
+        const val EXTRA_NAME = "restaurant_name"
+        const val EXTRA_URL = "restaurant_url"
+
+        private const val PREFS_NAME = "restaurant_app_prefs"
+        private const val KEY_LAST_RESTAURANT_ID = "last_restaurant_id"
+    }
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +39,22 @@ class RestaurantWebViewActivity : AppCompatActivity() {
         val restaurantUrl = intent.getStringExtra(EXTRA_URL).orEmpty().ifBlank { "https://example.com" }
 
         binding.textRestaurantTitle.text = restaurantName
-        binding.textChangeRestaurant.setOnClickListener { finish() }
-        binding.swipeRefreshLayout.setOnRefreshListener { binding.webView.reload() }
+
+        binding.textChangeRestaurant.setOnClickListener {
+            clearLastRestaurant()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            finish()
+        }
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.webView.reload()
+        }
+
+        binding.swipeRefreshLayout.setOnChildScrollUpCallback { _, _ ->
+            binding.webView.scrollY > 0
+        }
 
         configureWebView()
         binding.webView.loadUrl(restaurantUrl)
@@ -45,6 +68,13 @@ class RestaurantWebViewActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun clearLastRestaurant() {
+        val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+        prefs.edit()
+            .remove(KEY_LAST_RESTAURANT_ID)
+            .apply()
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -80,7 +110,11 @@ class RestaurantWebViewActivity : AppCompatActivity() {
                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                     true
                 } catch (_: ActivityNotFoundException) {
-                    Toast.makeText(this@RestaurantWebViewActivity, "Не удалось открыть ссылку", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@RestaurantWebViewActivity,
+                        "Не удалось открыть ссылку",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     true
                 }
             }
@@ -100,12 +134,8 @@ class RestaurantWebViewActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         binding.webView.stopLoading()
+        binding.swipeRefreshLayout.isRefreshing = false
         binding.webView.destroy()
         super.onDestroy()
-    }
-
-    companion object {
-        const val EXTRA_NAME = "restaurant_name"
-        const val EXTRA_URL = "restaurant_url"
     }
 }
