@@ -51,4 +51,8 @@ object RestaurantRepository {
             logoResId = R.drawable.logo_rest8
         )
     )
+
+    fun getRestaurantById(id: Int): Restaurant? {
+        return getRestaurants().find { it.id == id }
+    }
 }
