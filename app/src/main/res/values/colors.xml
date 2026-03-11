@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+
+    <color name="screenBackground">#FFF5F5F7</color>
+    <color name="screenBackgroundDark">#FF111214</color>
+    <color name="surfaceMain">#FFF6F3ED</color>
+    <color name="surfaceStroke">#1E000000</color>
+
+    <color name="cardBackground">#FFFFFFFF</color>
+    <color name="cardStroke">#14000000</color>
+    <color name="cardBackgroundPremium">#FFFCFAF6</color>
+    <color name="cardStrokePremium">#E2DCD5</color>
+
+    <color name="textPrimary">#FF121212</color>
+    <color name="textSecondary">#FF6C7278</color>
+    <color name="textOnDark">#FFF6F3ED</color>
+    <color name="textMutedOnDark">#FFB8B2A8</color>
+
+    <color name="brandPrimary">#FF111111</color>
+    <color name="brandOnPrimary">#FFFFFFFF</color>
+    <color name="brandSecondary">#FFEAEAEA</color>
+    <color name="brandOnSecondary">#FF111111</color>
+
+    <color name="accentWarm">#FFF3B444</color>
+    <color name="accentWarmSoft">#26F3B444</color>
+    <color name="badgeText">#FF1A1A1A</color>
+
+    <color name="icon_background">#121212</color>
+
+    <color name="backgroundDarkPremium">#0E0E10</color>
+    <color name="badgeTextPremium">#1A1A1A</color>
+    <color name="textOnDarkPremium">#F5F5F5</color>
+    <color name="textOnDarkSecondaryPremium">#B8B8B8</color>
+    <color name="cardContainerPremium">#F2EEE9</color>
+    <color name="textFooterPremium">#8A8A8A</color>
+</resources>
